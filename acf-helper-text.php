@@ -1,5 +1,6 @@
 <?php
 if (!function_exists('owAcfGetHeading')) {
+
     function owAcfGetHeading($pageType = 'single', $postId = NULL)
     {
         if (is_null($postId)) {
@@ -17,6 +18,7 @@ if (!function_exists('owAcfGetHeading')) {
 }
 
 if (!function_exists('owAcfTheHeading')) {
+
     function owAcfTheHeading($pageType = 'single', $postId = NULL)
     {
         return owAcfGetHeading($pageType, $postId);
