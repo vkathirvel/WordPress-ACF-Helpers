@@ -286,6 +286,9 @@ if (!function_exists('owAcfGetImageCta')) {
             'field_name' => FALSE,
             'post_id' => FALSE,
             'get_sub_field' => FALSE,
+            'image_attributes' => array(),
+            'link_attributes' => array(),
+            'div_attributes' => array(),
         );
         $args = array_merge($argsDefaults, $args);
         $argsDefaults = array();
@@ -388,24 +391,23 @@ if (!function_exists('owAcfGetCtasFromRepeater')) {
         $ctasFromRepeater = FALSE;
         if ($args['repeater_field_name'] AND $args['field_name'] AND get_field($args['repeater_field_name'], $args['post_id'])) {
             $owAcfGetImageCta = owAcfGetImageCta($args);
-            if ($owAcfGetImageCta) {
-                $ctasFromRepeater = '';
-                $ctasFromRepeater .= '<' . $args['repeater_container_element'];
-                foreach ($args['repeater_container_attributes'] as $repeaterContainerAttributeKey => $repeaterContainerAttributeValue) {
-                    $ctasFromRepeater .= ' ' . $repeaterContainerAttributeKey . '="' . $repeaterContainerAttributeValue . '"';
+            $ctasFromRepeater = '';
+            $ctasFromRepeater .= '<' . $args['repeater_container_element'];
+            foreach ($args['repeater_container_attributes'] as $repeaterContainerAttributeKey => $repeaterContainerAttributeValue) {
+                $ctasFromRepeater .= ' ' . $repeaterContainerAttributeKey . '="' . $repeaterContainerAttributeValue . '"';
+            }
+            $ctasFromRepeater .= '>';
+            while (has_sub_field($args['repeater_field_name'], $args['post_id'])) {
+                $ctasFromRepeater .= '<' . $args['repeater_item_element'];
+                foreach ($args['repeater_item_attributes'] as $repeaterItemAttributeKey => $repeaterItemAttributeValue) {
+                    $ctasFromRepeater .= ' ' . $repeaterItemAttributeKey . '="' . $repeaterItemAttributeValue . '"';
                 }
                 $ctasFromRepeater .= '>';
-                while (has_sub_field($args['repeater_field_name'], $args['post_id'])) {
-                    $ctasFromRepeater .= '<' . $args['repeater_item_element'];
-                    foreach ($args['repeater_item_attributes'] as $repeaterItemAttributeKey => $repeaterItemAttributeValue) {
-                        $ctasFromRepeater .= ' ' . $repeaterItemAttributeKey . '="' . $repeaterItemAttributeValue . '"';
-                    }
-                    $ctasFromRepeater .= '>';
-                    $ctasFromRepeater .= $owAcfGetImageCta;
-                    $ctasFromRepeater .= '</' . $args['repeater_item_element'] . '>';
-                }
-                $ctasFromRepeater .= '</' . $args['repeater_container_element'] . '>';
+                $owAcfGetImageCta = owAcfGetImageCta($args);
+                $ctasFromRepeater .= $owAcfGetImageCta;
+                $ctasFromRepeater .= '</' . $args['repeater_item_element'] . '>';
             }
+            $ctasFromRepeater .= '</' . $args['repeater_container_element'] . '>';
         }
         return $ctasFromRepeater;
     }
