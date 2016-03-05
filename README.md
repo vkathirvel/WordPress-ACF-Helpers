@@ -26,6 +26,11 @@ $args['image_attributes']['srcset_images'] = TRUE;
 ```
 
 ```
+$args['image_attributes']['width'] = 700;
+$args['image_attributes']['height'] = 300;
+```
+
+```
 $args = array(
     'repeater_field_name' => 'some_repeater',
     //'repeater_container_element' => 'ul', // Optional. 'ul' by default.

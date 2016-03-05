@@ -388,28 +388,33 @@ if (!function_exists('owAcfGetCtasFromRepeater')) {
             'get_sub_field' => TRUE,
         );
         $args = array_merge($argsDefaults, $args);
-        $ctasFromRepeater = FALSE;
+        $ctasFromRepeaterReturn = FALSE;
+        $ctasFromRepeater = '';
         if ($args['repeater_field_name'] AND $args['field_name'] AND get_field($args['repeater_field_name'], $args['post_id'])) {
-            $owAcfGetImageCta = owAcfGetImageCta($args);
-            $ctasFromRepeater = '';
             $ctasFromRepeater .= '<' . $args['repeater_container_element'];
             foreach ($args['repeater_container_attributes'] as $repeaterContainerAttributeKey => $repeaterContainerAttributeValue) {
                 $ctasFromRepeater .= ' ' . $repeaterContainerAttributeKey . '="' . $repeaterContainerAttributeValue . '"';
             }
             $ctasFromRepeater .= '>';
             while (has_sub_field($args['repeater_field_name'], $args['post_id'])) {
-                $ctasFromRepeater .= '<' . $args['repeater_item_element'];
-                foreach ($args['repeater_item_attributes'] as $repeaterItemAttributeKey => $repeaterItemAttributeValue) {
-                    $ctasFromRepeater .= ' ' . $repeaterItemAttributeKey . '="' . $repeaterItemAttributeValue . '"';
-                }
-                $ctasFromRepeater .= '>';
                 $owAcfGetImageCta = owAcfGetImageCta($args);
-                $ctasFromRepeater .= $owAcfGetImageCta;
-                $ctasFromRepeater .= '</' . $args['repeater_item_element'] . '>';
+                if ($owAcfGetImageCta) {
+                    $ctasFromRepeaterReturn = TRUE;
+                    $ctasFromRepeater .= '<' . $args['repeater_item_element'];
+                    foreach ($args['repeater_item_attributes'] as $repeaterItemAttributeKey => $repeaterItemAttributeValue) {
+                        $ctasFromRepeater .= ' ' . $repeaterItemAttributeKey . '="' . $repeaterItemAttributeValue . '"';
+                    }
+                    $ctasFromRepeater .= '>';
+                    $ctasFromRepeater .= $owAcfGetImageCta;
+                    $ctasFromRepeater .= '</' . $args['repeater_item_element'] . '>';
+                }
             }
             $ctasFromRepeater .= '</' . $args['repeater_container_element'] . '>';
         }
-        return $ctasFromRepeater;
+        if ($ctasFromRepeaterReturn) {
+            return $ctasFromRepeater;
+        }
+        return $ctasFromRepeaterReturn;
     }
 }
 
