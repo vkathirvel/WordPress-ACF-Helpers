@@ -22,8 +22,8 @@ if (!function_exists('owAcfGetBxSliderHtmlFromImageLinkRepeater')) {
         $argsDefaults = array(
             'repeater_container_attributes' => array('class' => 'bxslider'),
         );
-        $args = array_merge($argsDefaults, $args);
-        $bxSliderHtml = FALSE;
+        $args         = array_merge($argsDefaults, $args);
+        $bxSliderHtml = false;
         $bxSliderHtml = owAcfGetCtasFromRepeater($args);
         return $bxSliderHtml;
     }
@@ -34,16 +34,16 @@ if (!function_exists('owAcfBxSliderHtmlFromGallery')) {
     function owAcfBxSliderHtmlFromGallery($args = array())
     {
         $argsDefaults = array(
-            'gallery_array' => array(),
-            'check_single' => FALSE,
+            'gallery_array'    => array(),
+            'check_single'     => false,
             'image_attributes' => array(),
-            'ul_attributes' => array('class' => 'bxslider'),
-            'li_attributes' => array(),
+            'ul_attributes'    => array('class' => 'bxslider'),
+            'li_attributes'    => array(),
         );
-        $args = array_merge($argsDefaults, $args);
-        $bxSliderHtml = FALSE;
+        $args         = array_merge($argsDefaults, $args);
+        $bxSliderHtml = false;
         if (count($args['gallery_array']) > 0) {
-            if ($args['check_single'] AND ( count($args['gallery_array']) == 1)) {
+            if ($args['check_single'] and (count($args['gallery_array']) == 1)) {
                 $args['ul_attributes']['class'] = str_replace('bxslider', '', $args['ul_attributes']['class']);
             }
             $bxSliderHtml = '';
@@ -72,14 +72,14 @@ if (!function_exists('owAcfBxSliderHtmlPagerFromGallery')) {
     function owAcfBxSliderHtmlPagerFromGallery($args = array())
     {
         $argsDefaults = array(
-            'gallery_array' => array(),
+            'gallery_array'    => array(),
             'image_attributes' => array(),
-            'ul_attributes' => array('id' => 'bx-pager'),
-            'li_attributes' => array(),
-            'a_attributes' => array(),
+            'ul_attributes'    => array('id' => 'bx-pager'),
+            'li_attributes'    => array(),
+            'a_attributes'     => array(),
         );
-        $args = array_merge($argsDefaults, $args);
-        $bxSliderHtmlPager = FALSE;
+        $args              = array_merge($argsDefaults, $args);
+        $bxSliderHtmlPager = false;
         if (count($args['gallery_array']) > 0) {
             $bxSliderHtmlPager = '';
             $bxSliderHtmlPager .= '<ul';
